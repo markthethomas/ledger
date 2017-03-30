@@ -8,24 +8,34 @@ import (
 
 // Client is the discovery client
 var (
-	serviceName  string
-	serviceTags  []string
 	Client       consul.Client
 	registration *consul.AgentServiceRegistration
+	serviceName  string
+	serviceTags  []string
+	serviceURL   string
 )
 
+// ServiceConfig is what Setup uses to scaffold a service
+type ServiceConfig struct {
+	name string
+	tags []string
+	url  string
+	port int
+}
+
 // Setup does some basic setup for a service
-func Setup(name string, tags []string, port int) {
-	serviceName = name
-	if len(tags) > 0 {
-		for i := range tags {
-			serviceTags = append(serviceTags, tags[i])
+func Setup(config ServiceConfig) {
+	serviceName = config.name
+	if len(config.tags) > 0 {
+		for i := range config.tags {
+			serviceTags = append(serviceTags, config.tags[i])
 		}
 	}
+	serviceURL = config.url
 	registration = &consul.AgentServiceRegistration{
 		ID:   serviceName,
 		Name: serviceName,
-		Port: port,
+		Port: config.port,
 		Tags: serviceTags,
 	}
 }
@@ -39,7 +49,8 @@ func Register() {
 	}
 	Client = *client
 	Client.Agent().ServiceRegister(registration)
-	Client.KV().Put(&consul.KVPair{Key: "healthy", Value: []byte("true")}, nil)
+	Client.KV().Put(&consul.KVPair{Key: serviceName + ":healthy", Value: []byte("true")}, nil)
+	Client.KV().Put(&consul.KVPair{Key: serviceName + ":url", Value: []byte(serviceURL)}, nil)
 }
 
 // Deregister notifies consul we're offline
