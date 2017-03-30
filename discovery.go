@@ -15,7 +15,7 @@ var (
 )
 
 // Setup does some basic setup for a service
-func Setup(name string, tags []string) {
+func Setup(name string, tags []string, port int) {
 	serviceName = name
 	if len(tags) > 0 {
 		for i := range tags {
@@ -25,7 +25,7 @@ func Setup(name string, tags []string) {
 	registration = &consul.AgentServiceRegistration{
 		ID:   serviceName,
 		Name: serviceName,
-		Port: 3000,
+		Port: port,
 		Tags: serviceTags,
 	}
 }
