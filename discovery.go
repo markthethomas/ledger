@@ -17,25 +17,25 @@ var (
 
 // ServiceConfig is what Setup uses to scaffold a service
 type ServiceConfig struct {
-	name string
-	tags []string
-	url  string
-	port int
+	Name string
+	Tags []string
+	URL  string
+	Port int
 }
 
 // Setup does some basic setup for a service
 func Setup(config ServiceConfig) {
-	serviceName = config.name
-	if len(config.tags) > 0 {
-		for i := range config.tags {
-			serviceTags = append(serviceTags, config.tags[i])
+	serviceName = config.Name
+	if len(config.Tags) > 0 {
+		for i := range config.Tags {
+			serviceTags = append(serviceTags, config.Tags[i])
 		}
 	}
-	serviceURL = config.url
+	serviceURL = config.URL
 	registration = &consul.AgentServiceRegistration{
 		ID:   serviceName,
 		Name: serviceName,
-		Port: config.port,
+		Port: config.Port,
 		Tags: serviceTags,
 	}
 }
