@@ -55,8 +55,18 @@ func Register() {
 
 // Deregister notifies consul we're offline
 func Deregister() {
-	fmt.Println("[service deregister]")
+	fmt.Printf("[service deregister] %v\n", serviceName)
 	Client.Agent().ServiceRegister(registration)
+}
+
+// LookupKV lets a client look up a KV pair
+func LookupKV(key string) ([]byte, error) {
+	defaultQueryOpts := consul.QueryOptions{}
+	v, _, e := Client.KV().Get(key, &defaultQueryOpts)
+	if e != nil {
+		return nil, e
+	}
+	return v.Value, nil
 }
 
 // CheckHealth checks a given service to see if it is healthy
