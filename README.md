@@ -1,2 +1,2 @@
 # ledger
-Service discovery tool for Charityware
+Service discovery tool in Go for Consul
