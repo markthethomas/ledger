@@ -60,13 +60,13 @@ func Deregister() {
 }
 
 // LookupKV lets a client look up a KV pair
-func LookupKV(key string) ([]byte, error) {
+func LookupKV(key string) (*[]byte, error) {
 	defaultQueryOpts := consul.QueryOptions{}
 	v, _, e := Client.KV().Get(key, &defaultQueryOpts)
 	if e != nil {
 		return nil, e
 	}
-	return v.Value, nil
+	return &v.Value, nil
 }
 
 // CheckHealth checks a given service to see if it is healthy
