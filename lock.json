@@ -1,0 +1,29 @@
+{
+    "memo": "a5eb60aceeb5578eeb7370b9e64616c26f240976133d307b3af4a6e2afc5528f",
+    "projects": [
+        {
+            "name": "github.com/hashicorp/consul",
+            "branch": "master",
+            "revision": "f288c0e8eb594782e8b3a7632e64f2f0d1cc8528",
+            "packages": [
+                "api"
+            ]
+        },
+        {
+            "name": "github.com/hashicorp/go-cleanhttp",
+            "branch": "master",
+            "revision": "3573b8b52aa7b37b9358d966a898feb387f62437",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/hashicorp/serf",
+            "version": "v0.8.1",
+            "revision": "d6574a5bb1226678d7010325fb6c985db20ee458",
+            "packages": [
+                "coordinate"
+            ]
+        }
+    ]
+}

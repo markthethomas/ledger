@@ -1,0 +1,7 @@
+{
+    "dependencies": {
+        "github.com/hashicorp/consul": {
+            "branch": "master"
+        }
+    }
+}
