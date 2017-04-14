@@ -42,7 +42,7 @@ func Setup(config ServiceConfig) {
 
 // Register sets up discovery
 func Register() {
-	fmt.Println("[service register]")
+	fmt.Printf("[service register] %v\n", serviceName)
 	client, err := consul.NewClient(&consul.Config{Address: "127.0.0.1:8500"})
 	if err != nil {
 		fmt.Println(err.Error())
@@ -56,7 +56,10 @@ func Register() {
 // Deregister notifies consul we're offline
 func Deregister() {
 	fmt.Printf("[service deregister] %v\n", serviceName)
-	Client.Agent().ServiceRegister(registration)
+	if err := Client.Agent().ServiceDeregister(registration.ID); err != nil {
+		fmt.Println(err.Error())
+	}
+	fmt.Printf("[deregistered] %v\n", serviceName)
 }
 
 // LookupKV lets a client look up a KV pair
